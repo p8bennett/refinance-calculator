@@ -1,6 +1,7 @@
 backend:
   name: git-gateway
   branch: main
+  site_domain: ctreficalculator.com
 
 media_folder: "images"
 public_folder: "/images"
