@@ -1,7 +1,7 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: p8bennett/refinance-calculator
   branch: main
-  site_domain: ctreficalculator.com
 
 media_folder: "images"
 public_folder: "/images"
