@@ -813,11 +813,32 @@
             document.getElementById('leadModal').style.display = 'none';
         }
 
-        function submitForm(event) {
-            event.preventDefault();
-            alert('Thank you! We\'ll connect you with top Hartford area lenders within 24 hours.');
-            closeModal();
-        }
+     function submitForm(event) {
+    event.preventDefault();
+    
+    const formData = {
+        name: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        currentBalance: document.getElementById('balance').value,
+        currentRate: document.getElementById('currentRate').value,
+        creditScore: document.getElementById('credit').value,
+        monthlySavings: document.getElementById('monthlySavings').textContent
+    };
+    
+    // Send to Google Sheets
+    fetch('https://script.google.com/macros/s/AKfycbwkaecC0l61OQmC4AYy5CvC_gUHzaadOMNjoSL8Y7tLZTjs0j3FtTypz1sOKARzAGDVgA/exec', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData)
+    });
+    
+    alert('Thank you! We\'ll connect you with top Connecticut lenders within 24 hours.');
+    closeModal();
+}
 
         // Glossary search
         function searchGlossary(searchTerm) {
