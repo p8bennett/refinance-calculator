@@ -1080,10 +1080,43 @@
             }
         }
 
-        // Initialize on page load
-        window.onload = function() {
-            updateRate();
-            calculate();
+       // Fetch rates from rates.json file
+async function fetchLiveRates() {
+    try {
+        const response = await fetch('rates.json');
+        if (response.ok) {
+            const data = await response.json();
+            updateRatesDisplay(data.rates);
+            
+            const lastUpdated = new Date(data.lastUpdated).toLocaleDateString();
+            const ratesSection = document.querySelector('.current-rates h3');
+            if (ratesSection) {
+                const existingUpdate = document.querySelector('.rate-last-updated');
+                if (!existingUpdate) {
+                    ratesSection.insertAdjacentHTML('afterend', 
+                        `<div class="rate-last-updated" style="font-size: 11px; color: #6b7280; text-align: center; margin: 5px 0;">Last updated: ${lastUpdated}</div>`
+                    );
+                }
+            }
+        }
+    } catch (error) {
+        console.log('Using default rates');
+    }
+}
+
+function updateRatesDisplay(rates) {
+    const displays = document.querySelectorAll('.rate-display');
+    if (displays[0]) displays[0].querySelector('.rate-value').textContent = rates['30year'] + '%';
+    if (displays[1]) displays[1].querySelector('.rate-value').textContent = rates['15year'] + '%';
+    if (displays[2]) displays[2].querySelector('.rate-value').textContent = rates['5arm'] + '%';
+}
+
+// Initialize on page load
+window.onload = function() {
+    updateRate();
+    calculate();
+    fetchLiveRates(); // Add this line
+}
         }
 
         // Close modal when clicking outside
